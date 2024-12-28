@@ -13,7 +13,7 @@
       "description": "A FastAPI-based secure gateway for AWS Bedrock AI models",
       "license_text": "Apache-2.0",
       "readme": "README.md",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "package_name": "bedrock_access_gateway",
       "packager": "poetry",
       "dynamic": "",
@@ -32,10 +32,10 @@
       "python_ci_build_version": "3.11",
       "python_requires": "",
       "python_toolbag_version": "~0.25.5",
-      "cruft_skip": "CODEOWNERS,README.md,Makefile,.gitignore,src/bedrock_access_gateway/__init__.py,tests/*,.editorconfig,.bumpversion.cfg,tests/test_nothing.py,.github/workflows/build-test-publish.yml,.pre-commit-config.yaml,.github/workflows/mkdocs-gh-pages.yml,.bumpversion.cfg,.github/workflows/mkdocs-gh-pages.yml",
+      "cruft_skip": ".gitignore,CODEOWNERS,README.md,Makefile,.gitignore,src/bedrock_access_gateway/__init__.py,tests/*,.editorconfig,.bumpversion.cfg,tests/test_nothing.py,.github/workflows/build-test-publish.yml,.pre-commit-config.yaml,.github/workflows/mkdocs-gh-pages.yml,.bumpversion.cfg,.github/workflows/mkdocs-gh-pages.yml",
       "src_path_prefix": "src",
       "site_name": "bedrock_access_gateway",
-      "site_description": "A CDK construct that adds GitHub as an identity provider to a Cognito user pool",
+      "site_description": "A FastAPI-based secure gateway for AWS Bedrock AI models",
       "site_url": "",
       "mkdocs_site_dir": "site",
       "testpaths": "tests",
@@ -88,9 +88,9 @@
       "ruff_extend_exclude": "",
       "ruff_ignore": "",
       "_extensions": [
+        "toolbag.utils.template_expander.extensions.PythonExtension",
         "toolbag.utils.template_expander.extensions.python_extension.PythonExtension",
-        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension",
-        "toolbag.utils.template_expander.extensions.PythonExtension"
+        "toolbag.utils.template_expander.extensions.ExpandCookiecutterTemplateExtension"
       ],
       "_notes": {
         "lists": "Lists have a special meaning for Cookiecutter so we are forced to wrap them in a map or express as a CSV string and split in the template.",

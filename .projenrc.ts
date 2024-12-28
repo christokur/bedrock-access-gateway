@@ -50,6 +50,7 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
         'src/.npmrc',
         '.yalc',
         'yalc*',
+        'test-reports',
       ],
       deps: [
         'aws-cdk-lib',
