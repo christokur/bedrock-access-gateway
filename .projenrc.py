@@ -1,4 +1,4 @@
-from projen.python import PythonProject
+from projen.python import PythonProject, VenvOptions
 
 project = PythonProject(
     author_email="sands@christodelange.com",
@@ -6,76 +6,9 @@ project = PythonProject(
     module_name="bedrock_access_gateway",
     name="bedrock-access-gateway",
     version="0.1.0",
-    description="A FastAPI-based secure gateway for AWS Bedrock AI models",
-    license="Apache-2.0",
-    homepage="https://github.com/christokur/bedrock-access-gateway",
-    
-    # Dependencies
-    deps=[
-        "fastapi~=0.104.1",
-        "uvicorn~=0.24.0",
-        "pydantic~=2.5.2",
-        "boto3~=1.33.6",
-        "python-jose[cryptography]~=3.3.0",
-        "python-multipart~=0.0.6",
-        "python-dotenv~=1.0.0",
-    ],
-    
-    dev_deps=[
-        "pytest~=7.4.3",
-        "pytest-cov~=4.1.0",
-        "black~=23.11.0",
-        "flake8~=6.1.0",
-        "isort~=5.12.0",
-        "mypy~=1.7.1",
-    ],
-    
-    # Git ignore patterns
-    gitignore=[
-        ".vscode/",
-        ".idea/",
-        "__pycache__/",
-        "*.pyc",
-        ".pytest_cache/",
-        ".coverage",
-        "htmlcov/",
-        "dist/",
-        "build/",
-        "*.egg-info/",
-        ".env",
-        ".DS_Store",
-        "coverage.xml",
-        ".mypy_cache/",
-        "/.aider*",
-        "/.jsii",
-        "/dist",
-        "/lib",
-        "/.vscode",
-        "/.idea",
-        "/coverage",
-        "/cdk.out",
-        "/test-reports",
-        "/node_modules",
-        "/.DS_Store",
-        "/.ai",
-        "/env.txt",
-        "/cmd.txt",
-        "/errors.txt",
-        "/ai",
-        ".env",
-        "__pycache__",
-        "*.pyc",
-        ".pytest_cache",
-        ".coverage",
-        "htmlcov",
-        "dist",
-        "build",
-        "*.egg-info",
-        "!/tsconfig*",
-        "src/.npmrc",
-        ".yalc",
-        "yalc*",
-      ],
+    venv=VenvOptions(
+        envdir="/Users/christo/.pyenv/versions/3.11.10/envs/b2b-sso-service"
+    )
 )
 
 # Add custom tasks
