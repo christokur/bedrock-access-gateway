@@ -6,11 +6,8 @@
       "type": "build"
     },
     {
-      "name": "@types/jest",
-      "type": "build"
-    },
-    {
       "name": "@types/node",
+      "version": "^20.0.0",
       "type": "build"
     },
     {
@@ -25,7 +22,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^2.1.0",
+      "version": "^2.171.1",
       "type": "build"
     },
     {
@@ -46,20 +43,7 @@
       "type": "build"
     },
     {
-      "name": "jest",
-      "type": "build"
-    },
-    {
-      "name": "jest-junit",
-      "version": "^15",
-      "type": "build"
-    },
-    {
       "name": "projen",
-      "type": "build"
-    },
-    {
-      "name": "ts-jest",
       "type": "build"
     },
     {
@@ -72,7 +56,7 @@
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.1.0",
+      "version": "^2.171.1",
       "type": "runtime"
     },
     {

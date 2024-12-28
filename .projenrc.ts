@@ -1,12 +1,12 @@
 import { AwsCdkTypeScriptApp } from 'projen/lib/awscdk';
 import { NodePackageManager } from 'projen/lib/javascript';
+import {execSync} from "child_process";
 
 class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
   constructor(options = {}) {
     super({
       authorName: 'Christo De Lange',
       authorEmail: 'sands@christodelange.com',
-      cdkVersion: '2.171.1',
       defaultReleaseBranch: 'main',
       name: 'bedrock-access-gateway',
       description: 'A FastAPI-based secure gateway for AWS Bedrock AI models',
@@ -14,6 +14,12 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
       license: 'Apache-2.0',
       projenrcTs: true,
       packageManager: NodePackageManager.NPM,
+      // Keep Jest but make it do nothing
+      jest: false,
+      // CDK directory structure
+      srcdir: 'cdk',
+      appEntrypoint: 'cdk/app.ts',
+      outdir: 'cdk.out',
       gitignore: [
         '/.aider*',
         '/.jsii',
@@ -48,8 +54,6 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
       deps: [
         'aws-cdk-lib',
         'constructs',
-        '@aws-cdk/aws-apigatewayv2-alpha',
-        '@aws-cdk/aws-apigatewayv2-integrations-alpha',
       ],
       devDeps: [
         'projen@^0.91.0',
@@ -58,6 +62,12 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
         'ts-node@^10.9.0',
         'typescript@~5.3.0',
       ],
+      cdkVersion: '2.172.0',
+      jsiiReleaseVersion: "0.1.0",
+      nextVersionCommand: "bump2version patch --allow-dirty",
+      releaseToNpm: false,
+      release: false,
+      minNodeVersion: "20.0.0",
       tsconfig: {
         compilerOptions: {
           target: 'ES2020',
@@ -80,23 +90,22 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
           resolveJsonModule: true,
         },
       },
-      ...options,
     });
 
-    // Add Python-specific configurations
+    // Update the test task to use pytest
+    const testTask = this.tasks.tryFind('test');
+    if (testTask) {
+      testTask.reset('pytest');
+    }
+
     this.addTask('start', {
       description: 'Start the FastAPI server',
       exec: 'uvicorn src.api.app:app --reload',
     });
 
-    this.addTask('test', {
-      description: 'Run Python tests',
-      exec: 'pytest',
-    });
-
-    this.addTask('lint', {
+    this.addTask('lint:py', {
       description: 'Run Python linting',
-      exec: 'flake8 src tests',
+      exec: 'flake8 src/api tests',
     });
 
     // Add Docker-related tasks
@@ -110,11 +119,16 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
       exec: 'docker run -p 8000:8000 bedrock-access-gateway',
     });
 
-    // Add a clean task
+    // Add a clean task that handles both TypeScript and Python artifacts
     this.addTask('clean', {
-      description: 'Clean up temporary build files',
-      exec: 'rm -rf node_modules package-lock.json yarn.lock tmp .jsii cdk.out',
+      description: 'Clean up all temporary build files',
+      exec: 'rm -rf node_modules tmp .jsii cdk.out __pycache__ *.pyc .pytest_cache .coverage htmlcov',
     });
+  }
+
+  postSynthesize() {
+    super.postSynthesize();
+    execSync("node scripts/update-version.js", { stdio: "inherit" });
   }
 }
 

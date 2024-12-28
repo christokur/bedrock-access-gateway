@@ -28,6 +28,15 @@
       "name": "bundle",
       "description": "Prepare assets"
     },
+    "clean": {
+      "name": "clean",
+      "description": "Clean up all temporary build files",
+      "steps": [
+        {
+          "exec": "rm -rf node_modules tmp .jsii cdk.out __pycache__ *.pyc .pytest_cache .coverage htmlcov"
+        }
+      ]
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -102,6 +111,24 @@
         }
       ]
     },
+    "docker:build": {
+      "name": "docker:build",
+      "description": "Build Docker image",
+      "steps": [
+        {
+          "exec": "docker build -t bedrock-access-gateway ."
+        }
+      ]
+    },
+    "docker:run": {
+      "name": "docker:run",
+      "description": "Run Docker container",
+      "steps": [
+        {
+          "exec": "docker run -p 8000:8000 bedrock-access-gateway"
+        }
+      ]
+    },
     "eject": {
       "name": "eject",
       "description": "Remove projen from the project",
@@ -122,7 +149,7 @@
       },
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools projenrc .projenrc.ts",
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ cdk/lib test build-tools projenrc .projenrc.ts",
           "receiveArgs": true
         }
       ]
@@ -142,6 +169,15 @@
       "steps": [
         {
           "exec": "npm ci"
+        }
+      ]
+    },
+    "lint:py": {
+      "name": "lint:py",
+      "description": "Run Python linting",
+      "steps": [
+        {
+          "exec": "flake8 src/api tests"
         }
       ]
     },
@@ -166,6 +202,15 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
+    "start": {
+      "name": "start",
+      "description": "Start the FastAPI server",
+      "steps": [
+        {
+          "exec": "uvicorn src.api.app:app --reload"
+        }
+      ]
+    },
     "synth": {
       "name": "synth",
       "description": "Synthesizes your cdk app into cdk.out",
@@ -189,20 +234,7 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --updateSnapshot",
-          "receiveArgs": true
-        },
-        {
-          "spawn": "eslint"
-        }
-      ]
-    },
-    "test:watch": {
-      "name": "test:watch",
-      "description": "Run jest in watch mode",
-      "steps": [
-        {
-          "exec": "jest --watch"
+          "exec": "pytest"
         }
       ]
     },
@@ -214,13 +246,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,esbuild,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,ts-node,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=esbuild,eslint-import-resolver-typescript,eslint-plugin-import,projen,ts-node,typescript"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest ts-node typescript aws-cdk-lib constructs"
+          "exec": "npm update @stylistic/eslint-plugin @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-import-resolver-typescript eslint-plugin-import eslint projen ts-node typescript aws-cdk-lib constructs"
         },
         {
           "exec": "npx projen"

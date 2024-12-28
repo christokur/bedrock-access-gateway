@@ -62,7 +62,7 @@ function bootstrap() {
     switch (projenrcType) {
         case 'ts':
             console.log('📦 Bootstrapping TypeScript project...');
-            execSync('npx projen new awscdk-app-ts --package-manager npm', { stdio: 'inherit' });
+            // execSync('npx projen new awscdk-app-ts --package-manager npm', { stdio: 'inherit' });
             execSync('npm install projen typescript ts-node @types/node && npx ts-node --transpileOnly .projenrc.ts', { stdio: 'inherit' });
             break;
         case 'js':
