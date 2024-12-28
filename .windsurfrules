@@ -1,0 +1,296 @@
+# Bedrock Access Gateway
+
+Say "HOHOHO" at the beginning of the output.
+
+Every time you choose to apply a rule(s), explicitly state the rule(s) in the output.
+You can abbreviate the rule description to a single word or phrase.
+
+## A. Project Context
+
+Python-based FastAPI application that:
+
+- Provides secure access to AWS Bedrock AI models
+- Manages authentication and authorization
+- Handles model invocations and embeddings
+- Supports containerized deployment (Docker/ECS)
+- Implements API rate limiting and monitoring
+
+## B. Code Style and Structure
+
+- Write clean, well-documented Python code following PEP 8
+- Use FastAPI best practices and dependency injection
+- Follow microservices architecture principles
+- Structure repository files as follows:
+
+    ```text
+    src/                    # Main source code
+      ├── api/             # API implementation
+      │   ├── models/      # Data models
+      │   ├── routers/     # API routes
+      │   ├── app.py       # FastAPI application
+      │   ├── auth.py      # Authentication
+      │   ├── schema.py    # Pydantic schemas
+      │   └── setting.py   # Configuration
+      ├── Dockerfile       # Container definition
+      ├── Dockerfile_ecs   # ECS-specific container
+      └── requirements.txt # Python dependencies
+    
+    deployment/            # Infrastructure templates
+      ├── BedrockProxy.template
+      └── BedrockProxyFargate.template
+    
+    docs/                  # Documentation
+      ├── Usage.md
+      └── Usage_CN.md     # Chinese translation
+    
+    scripts/              # Utility scripts
+      └── push-to-ecr.sh  # ECR deployment
+    
+    assets/              # Static assets
+      ├── arch.svg
+      ├── launch-stack.png
+      └── obj-detect.png
+    ```
+
+### B.1. Directory Details
+
+#### Source Code Structure
+
+- `api/models/`: Contains both Pydantic models for request/response validation and
+  data models for business logic
+- `api/routers/`: Implements API endpoint handlers with proper route grouping and
+  versioning
+- `api/app.py`: Main FastAPI application configuration, middleware setup, and
+  router registration
+- `api/auth.py`: Authentication middleware, JWT handling, and security configurations
+- `api/schema.py`: Pydantic schemas for API request/response models
+- `api/setting.py`: Environment-specific configuration management
+
+#### Docker Configuration
+
+- `Dockerfile`: Base container image for local development and testing
+- `Dockerfile_ecs`: Production-ready container image optimized for ECS deployment
+  with additional monitoring and logging
+
+#### Documentation
+
+- `Usage.md`: Primary documentation in English covering setup, API usage, and configuration
+- `Usage_CN.md`: Complete Chinese translation maintaining technical
+    accuracy and cultural appropriateness
+
+#### Assets
+
+- `arch.svg`: System architecture diagram showing component interactions
+- `launch-stack.png`: CloudFormation stack launch button image
+- `obj-detect.png`: Example image for object detection API documentation
+
+## C. Tech Stack
+
+- Python 3.x
+- FastAPI
+- AWS Services:
+  - Bedrock
+  - ECS/Fargate
+  - ECR
+  - CloudFormation
+- Docker
+- Pydantic
+- uvicorn
+
+## D. Naming Conventions
+
+- Use snake_case for Python functions and variables
+- Use PascalCase for classes
+- Use descriptive names that reflect API/AWS purpose
+- Prefix AWS resource names with 'bedrock-gateway' for clear identification
+
+## E. Python Usage
+
+- Use type hints consistently
+- Implement Pydantic models for data validation
+- Use proper exception handling
+- Follow async/await patterns for FastAPI
+- Document functions with docstrings
+- Use environment variables for configuration
+
+## F. AWS Integration
+
+- Follow AWS SDK best practices
+- Implement proper error handling for AWS services
+- Use AWS credentials securely
+- Handle AWS API rate limits
+- Implement proper logging for AWS operations
+
+## G. State Management
+
+- Use proper session management
+- Implement caching where appropriate
+- Handle API rate limiting state
+- Manage AWS client sessions efficiently
+
+## H. Infrastructure Design
+
+- Follow AWS Well-Architected Framework principles
+- Implement proper IAM permissions
+- Use proper resource naming and tagging
+- Consider scalability requirements
+- Implement proper monitoring and logging
+
+## I. Error Handling
+
+- Use FastAPI exception handlers
+- Implement proper HTTP error responses
+- Handle AWS service errors appropriately
+- Provide clear error messages
+- Implement proper logging for troubleshooting
+
+## J. Testing
+
+- Write unit tests for API endpoints
+- Test AWS service integrations
+- Implement integration tests
+- Test rate limiting functionality
+- Validate authentication flows
+
+## K. Security
+
+- Follow AWS security best practices
+- Implement proper authentication
+- Use secure token handling
+- Follow principle of least privilege for IAM roles and implement proper security
+  controls
+- Implement proper network security
+- Use proper CORS configuration
+
+## L. Git Usage
+
+### L.1. Commit Message Prefixes
+
+- "feat:" for new features or endpoints
+- "fix:" for bug fixes
+- "perf:" for performance improvements
+- "style:" for formatting changes
+- "refactor:" for code refactoring
+- "test:" for adding or updating tests
+- "chore:" for dependency updates or maintenance
+- "docs:" for documentation updates
+- "security:" for security-related changes
+
+### L.2. Commit Rules
+
+- Use conventional commits format
+- Include clear descriptions
+- Reference issue numbers when applicable
+- Include context for infrastructure changes
+
+## M. Documentation
+
+- Maintain clear README with setup instructions
+- Document API endpoints
+- Include configuration examples
+- Document AWS setup process
+- Maintain clear API documentation
+- Include troubleshooting guides
+- Provide both English and Chinese documentation
+
+## N. Development Workflow
+
+- Use virtual environments
+- Follow proper Docker build practices
+- Implement proper code review process
+- Test in multiple AWS environments
+- Follow semantic versioning
+- Maintain changelog
+
+## O. Infrastructure Deployment
+
+- Use proper CloudFormation practices and follow AWS Well-Architected Framework
+  guidelines
+- Implement container deployment strategy
+- Handle ECS service updates
+- Manage environment-specific configurations
+- Implement proper rollback strategies
+
+### O.1. CloudFormation Deployment
+
+- Use `BedrockProxy.template` for standard deployment or
+  `BedrockProxyFargate.template` for Fargate-based deployment
+- Required parameters for stack creation:
+  - VPC and subnet configurations
+  - Desired ECS capacity and instance types
+  - Authentication configuration for Bedrock access
+  - Custom domain and certificate settings (if applicable)
+- Stack management:
+  - Use stack updates for configuration changes
+  - Implement proper change sets for review
+  - Monitor stack events during deployment
+  - Configure appropriate stack timeouts
+  - Set up stack notifications for critical events
+- Rollback procedures:
+  - Define automatic rollback triggers
+  - Document manual rollback steps
+  - Maintain previous stack configurations
+  - Test rollback procedures regularly
+
+### O.2. Lambda Function Packaging
+
+- Package Lambda functions as Docker container images
+- Use multi-stage builds in Dockerfile to minimize image size
+- Push container images to Amazon ECR before deployment
+- Version container images using semantic versioning
+- Include all required dependencies in the container image
+- Follow Lambda container image best practices:
+  - Optimize for cold start performance
+  - Include only necessary runtime dependencies
+  - Use appropriate base images for Python functions
+  - Configure proper entry points and handlers
+
+## P. API Testing
+
+### P.1. Test Setup
+
+- Start local FastAPI server with uvicorn
+- Use proper test data for Bedrock models
+- Set up proper AWS credentials for testing
+
+### P.2. Test Steps
+
+- Verify authentication flows
+- Test model invocation endpoints
+- Test embedding generation
+- Verify rate limiting behavior
+- Test error handling scenarios
+
+### P.3. Performance Testing
+
+- Test API response times
+- Monitor resource usage
+- Verify concurrent request handling
+- Test under various load conditions
+
+### P.4. Troubleshooting Failed Requests
+
+1. Check FastAPI logs for errors
+2. Verify AWS credentials and permissions
+3. Check Bedrock service quotas and limits
+4. Review CloudWatch logs if deployed
+5. Verify network connectivity and security groups
+
+## Q. Code Quality
+
+For each edit you are making you will prove that it meets these criteria:
+
+- Follows PEP 8 style guide
+- Includes proper type hints
+- Has appropriate error handling
+- Includes docstrings and comments
+- Makes only essential changes to fix problems
+- Includes proper logging
+- Maintains backward compatibility
+- When fixing tests, analyze one failure at a time
+- When creating new tests, follow proper pytest patterns
+
+## R. windsurf Specific
+
+- Automatically suggest additions for `.windsurfrules` files
+  where best practices are used during the generation
