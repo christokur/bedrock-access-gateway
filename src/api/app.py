@@ -50,4 +50,6 @@ async def validation_exception_handler(request, exc):
 handler = Mangum(app)
 
 if __name__ == "__main__":
+    import dotenv
+    dotenv.load_dotenv()
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)

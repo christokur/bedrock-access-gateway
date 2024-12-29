@@ -165,7 +165,7 @@ show-fixes = true
 # By default, always show source code snippets.
 # show-source = false
 # Allow imports relative to the "src" and "test" directories.
-src = ["src", "tests"]
+src = ["src", "test"]
 target-version = "py311"
 
 [tool.ruff.lint]
@@ -194,14 +194,14 @@ max-args = 10
 [tool.isort]
 profile = "black"
 skip_gitignore = true
-src_paths = [ "src", "tests",  ]
+src_paths = [ "src", "test",  ]
 
 [tool.flake8]
 max-line-length = 120
 extend-ignore = "E203"
 
 [tool.pytest.ini_options]
-testpaths = [ "src", "tests",  ]
+testpaths = [ "src", "test",  ]
 addopts = ["--doctest-modules"]
 norecursedirs = [
     "build",
@@ -211,7 +211,7 @@ doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
 
 [tool.coverage.run]
 command_line = "-m pytest --doctest-modules"
-source = [ "src", "tests",]
+source = [ "src", "test",]
 parallel = true
 branch = true # measure branch coverage in addition to statement coverage
 
@@ -247,9 +247,9 @@ pc-autoupdate = { shell = "pre-commit autoupdate", help = "Auto update pre-commi
 pc-reinstall = { shell = "pre-commit uninstall; gitlint uninstall-hook; pre-commit install; pre-commit gc; pre-commit autoupdate; gitlint install-hook", help = "Reset commit-msg and pre-commit hooks" }
 pc-uninstall = { shell = "pre-commit uninstall; gitlint uninstall-hook", help = "Uninstall commit-msg and pre-commit hooks" }
 hooks = { shell = "git add -A; pre-commit run", help = "Run pre-commit hooks" }
-isort = { shell = "[ -z 'srctests' ] || { export PYTHONWARNINGS='ignore::Warning:setuptools.command.install'; isort src tests; }", help = "isort imports in src and tests" }
-black = { shell = "[ -z 'srctests' ] || { black src tests; }", help = "black formatting in src and tests" }
-tests = { shell = "[ -z 'srctests' ] || { poetry run pytest -s --doctest-modules src tests; }", help = "pytest's" }
+isort = { shell = "[ -z 'srctest' ] || { export PYTHONWARNINGS='ignore::Warning:setuptools.command.install'; isort src test; }", help = "isort imports in src and test" }
+black = { shell = "[ -z 'srctest' ] || { black src test; }", help = "black formatting in src and test" }
+tests = { shell = "[ -z 'srctest' ] || { poetry run pytest -s --doctest-modules src test; }", help = "pytest's" }
 pros = { shell = "prospector --profile prospector.yaml", help = "Prospector" }
 b2v = { cmd = "bump2version patch --new-version '${version}' --allow-dirty --commit", args = [{ name = "version", positional = true, multiple = false }], help = "Prospector" }
 gcl = { shell = "cz changelog --incremental || { echo 'With incremental changelog we are ok when there is nothing new to add ...'; true; }; python scripts/normalize_changelog.py", help = "Git Changelog" }
@@ -268,10 +268,10 @@ pule = { sequence = ["pu", "locks", "exports"], help = "Poetry update and export
 exports = { sequence = ["export", "export-dev"], help = "Do things to export" }
 formats = { sequence = ["isort", "black"], help = "Run checks" }
 locks = { sequence = ["set-lock", "check-lock"], help = "Manage poetry.lock" }
-ruff =       { shell = "[ -z 'srctests' ] || { poe formats; ruff check         src tests; }", help = "Ruff linter" }
-ruff-noqa  = { shell = "[ -z 'srctests' ] || { ruff check --select RUF --fix   src tests; }", help = "Ruff linter fix noqa" }
-ruff-watch = { shell = "[ -z 'srctests' ] || { poe formats; ruff check --watch src tests; }", help = "Ruff linter in watch mode" }
-ruff-fix =   { shell = "[ -z 'srctests' ] || { ruff check --fix-only           src tests; }", help = "Ruff linter fixes" }
+ruff =       { shell = "[ -z 'srctest' ] || { poe formats; ruff check         src test; }", help = "Ruff linter" }
+ruff-noqa  = { shell = "[ -z 'srctest' ] || { ruff check --select RUF --fix   src test; }", help = "Ruff linter fix noqa" }
+ruff-watch = { shell = "[ -z 'srctest' ] || { poe formats; ruff check --watch src test; }", help = "Ruff linter in watch mode" }
+ruff-fix =   { shell = "[ -z 'srctest' ] || { ruff check --fix-only           src test; }", help = "Ruff linter fixes" }
 tflint = { shell = "env bash bin/run-tflint.sh", help = "Terraform linter" }
 tffmt = { shell = "terraform fmt -list=true -recursive -write=true", help = "Terraform formatting" }
 cruft = { shell = "git add -A ; poe cruft-checkout :latest:; git status ", help = "Update cruft to latest" }
@@ -281,18 +281,18 @@ cruft-all = { sequence = ["cruft", "cruft-chore"], help = "Update cruft stuff in
 
 [tool.poe.tasks.lint]
 shell = """
-[ -z 'srctests' ] || {
-python -m black --check src tests;
-python -m isort --check-only src tests;
-ruff check src tests;
+[ -z 'srctest' ] || {
+python -m black --check src test;
+python -m isort --check-only src test;
+ruff check src test;
 }
 """
 help = "Do a few lint checks"
 
 [tool.poe.tasks.test-cov]
 shell = """
-[ -z 'srctests' ] || {
-coverage run -m pytest --doctest-modules src tests;
+[ -z 'srctest' ] || {
+coverage run -m pytest --doctest-modules src test;
 [ 0 -eq $? ] || { echo 'Tests failed'; exit 1; };
 coverage combine;
 coverage html -d coverage;

@@ -38,7 +38,7 @@
       "site_description": "A FastAPI-based secure gateway for AWS Bedrock AI models",
       "site_url": "",
       "mkdocs_site_dir": "site",
-      "testpaths": "tests",
+      "testpaths": "test",
       "test_exclude": "",
       "theme_light_primary": "cyan",
       "theme_light_accent": "gray",
@@ -161,10 +161,10 @@
         "src"
       ],
       "testpaths_list": [
-        "tests"
+        "test"
       ],
       "tests_list": [
-        "tests"
+        "test"
       ]
     }
   },
