@@ -7,7 +7,7 @@ requires = [
 
 [tool.poetry]
 name = "bedrock-access-gateway"
-version = "0.1.2"
+version = "0.1.3"
 description = "A FastAPI-based secure gateway for AWS Bedrock AI models"
 authors = ["Christo De Lange <sands@christodelange.com>"]
 license = "Apache-2.0"
@@ -327,7 +327,7 @@ args = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.2"
+version = "0.1.3"
 version_files = [
     ".bumpversion.cfg",
     "VERSION",

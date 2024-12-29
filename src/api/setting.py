@@ -6,7 +6,7 @@ API_ROUTE_PREFIX = "/api/v1"
 
 TITLE = "Amazon Bedrock Proxy APIs"
 SUMMARY = "OpenAI-Compatible RESTful APIs for Amazon Bedrock"
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 DESCRIPTION = """
 Use OpenAI-Compatible RESTful APIs for Amazon Bedrock models.
 """
