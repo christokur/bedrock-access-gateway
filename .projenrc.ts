@@ -130,6 +130,7 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
   postSynthesize() {
     super.postSynthesize();
     execSync("node scripts/update-version.js", { stdio: "inherit" });
+    // execSync("python scripts/update-python-exec.py", { stdio: "inherit" });
   }
 }
 

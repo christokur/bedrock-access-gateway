@@ -1,1 +1,1 @@
-# bedrock-access-gateway v0.1.1
+# bedrock-access-gateway v0.1.2

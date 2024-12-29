@@ -1,6 +1,6 @@
 import pytest
-
 from bedrock_access_gateway.example import hello
+
 
 @pytest.mark.parametrize(
     ("name", "expected"),
