@@ -396,4 +396,4 @@ accent = "yellow"
 toggle = { icon = "material/lightbulb-outline", name = "Switch to dark mode" }
 
 [tool.cruft]
-skip= [".gitignore","CODEOWNERS","README.md","Makefile",".gitignore","src/bedrock_access_gateway/__init__.py","tests/*",".editorconfig",".bumpversion.cfg","tests/test_nothing.py",".github/workflows/build-test-publish.yml",".pre-commit-config.yaml",".github/workflows/mkdocs-gh-pages.yml",".bumpversion.cfg",".github/workflows/mkdocs-gh-pages.yml",]
+skip= [".bumpversion.cfg",".gitignore","CODEOWNERS","README.md","Makefile",".gitignore","src/bedrock_access_gateway/__init__.py","tests/*",".editorconfig",".bumpversion.cfg","tests/test_nothing.py",".github/workflows/build-test-publish.yml",".pre-commit-config.yaml",".github/workflows/mkdocs-gh-pages.yml",".bumpversion.cfg",".github/workflows/mkdocs-gh-pages.yml",]
