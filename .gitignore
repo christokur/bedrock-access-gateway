@@ -45,7 +45,7 @@ jspm_packages/
 /cmd.txt
 /errors.txt
 /ai
-.env
+**/.env
 __pycache__
 *.pyc
 .pytest_cache
@@ -58,6 +58,7 @@ build
 src/.npmrc
 .yalc
 yalc*
+test-reports
 !/.github/workflows/build.yml
 !/.mergify.yml
 !/.github/workflows/upgrade.yml
@@ -65,7 +66,7 @@ yalc*
 !/test/
 !/tsconfig.json
 !/tsconfig.dev.json
-!/cdk/lib/
+!/cdk/
 /lib
 /dist/
 !/.eslintrc.json

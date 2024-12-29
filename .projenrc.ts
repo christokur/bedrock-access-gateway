@@ -19,7 +19,6 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
       // CDK directory structure
       srcdir: 'cdk',
       appEntrypoint: 'cdk/app.ts',
-      outdir: 'cdk.out',
       gitignore: [
         '/.aider*',
         '/.jsii',
@@ -37,7 +36,7 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
         '/cmd.txt',
         '/errors.txt',
         '/ai',
-        '.env',
+        '**/.env',
         '__pycache__',
         '*.pyc',
         '.pytest_cache',
@@ -101,7 +100,11 @@ class BedrockAccessGatewayProject extends AwsCdkTypeScriptApp {
 
     this.addTask('start', {
       description: 'Start the FastAPI server',
-      exec: 'uvicorn src.api.app:app --reload',
+      steps: [
+        {
+          exec: 'cd src && PYTHONPATH=src poetry run uvicorn api.app:app --host 0.0.0.0 --port 8000 --reload',
+        },
+      ],
     });
 
     this.addTask('lint:py', {
